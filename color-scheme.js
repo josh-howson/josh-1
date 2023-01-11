@@ -20,7 +20,7 @@ if (currentTheme == "light") {
 } else if (currentTheme == "dark") {
   document.documentElement.dataset.theme = "dark";
 } else {
-  // check for system preference
+  // no cookie, check for system preference and set the cookie
   if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
     document.documentElement.dataset.theme = "dark";
     localStorage.setItem("theme", "dark");

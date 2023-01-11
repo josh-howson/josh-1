@@ -433,16 +433,16 @@ nav a svg {
 /* light mode via toggle (copied properties) */
 
 :root[data-theme="light"] {
-  --primary-saturation: 50%;
-  --primary-lightness: 60%;
-  --canvas-hue: 0;
-  --canvas-saturation: 0%;
-  --canvas-lightness: 95%;
-  --text-hue: 240;
-  --text-saturation: 10%;
-  --text-lightness: 20%;
-  --hsl-canvas-emphasis: 0, 0%, 100%;
-  --canvas-emphasis: hsl(var(--hsl-canvas-emphasis));
-  --visited-saturation: 70%;
-  --visited-lightness: 0%;
+  --primary-saturation: 50% !important;
+  --primary-lightness: 60% !important;
+  --canvas-hue: 0 !important;
+  --canvas-saturation: 0% !important;
+  --canvas-lightness: 95% !important;
+  --text-hue: 240 !important;
+  --text-saturation: 10% !important;
+  --text-lightness: 20% !important;
+  --hsl-canvas-emphasis: 0, 0%, 100% !important;
+  --canvas-emphasis: hsl(var(--hsl-canvas-emphasis)) !important;
+  --visited-saturation: 70% !important;
+  --visited-lightness: 0% !important;
 }
