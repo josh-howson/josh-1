@@ -244,6 +244,7 @@ h1 .title {
   border: .4em solid hsla(var(--hsl-canvas-emphasis), 1);
   /* forwards entry animation */
   animation: portraitEnter var(--duration-slow) .25s forwards, beatInward var(--pulse-out-duration) .4s infinite var(--easing);
+  transition: border-color var(--transition-medium);
 }
 
 .ring-section::before {
