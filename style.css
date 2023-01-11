@@ -203,6 +203,10 @@ h1 .title {
 }
 
 @media (min-aspect-ratio: 4/1) {
+  body {
+    overflow: auto;
+  }
+
   h1 {
     margin-top: .5em;
   }
