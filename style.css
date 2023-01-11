@@ -291,6 +291,12 @@ nav a svg {
   width: 1.25em;
 }
 
+@media (max-width:29.99em) {
+  nav a svg + span {
+    display: none;
+  }
+}
+
 /* Animations */
 
 @keyframes pulseScale {
