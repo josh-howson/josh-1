@@ -314,6 +314,7 @@ nav a svg {
 @media (max-width:29.99em) {
   nav a svg {
     height: 2.5em;
+    width: 2.5em;
   }
 
   nav a svg+span {
