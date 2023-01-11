@@ -17,8 +17,18 @@ const currentTheme = localStorage.getItem("theme");
 if (currentTheme == "light") {
   document.documentElement.dataset.theme = "light";
   themeToggler.checked = true;
-} else {
+} else if (currentTheme == "dark") {
   document.documentElement.dataset.theme = "dark";
+} else {
+  // check for system preference
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    document.documentElement.dataset.theme = "dark";
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.documentElement.dataset.theme = "light";
+    themeToggler.checked = true;
+    localStorage.setItem("theme", "light");
+  }
 }
 
 // track mouse movement on the .ring-section and update the CSS variables
