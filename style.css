@@ -232,6 +232,8 @@ h1 .title {
   margin: -999rem;
   padding: 999rem;
   will-change: transform;
+  transition: transform var(--transition-medium), scale var(--transition-medium);
+  image-rendering: optimizeQuality;
 }
 
 /* skinny screens have more room for the image */
@@ -269,6 +271,10 @@ h1 .title {
   /* forwards entry animation */
   animation: portraitEnter var(--duration-slow) .25s forwards, beatInward var(--pulse-out-duration) .4s infinite var(--easing);
   transition: border-color var(--transition-medium);
+}
+
+.ring-section:has(.portrait:hover) {
+  scale: 1.03;
 }
 
 .ring-section::before {
