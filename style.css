@@ -243,7 +243,7 @@ h1 .title {
   grid-template-areas: "center";
   place-items: center;
   overflow: hidden;
-  transform: rotateY(var(--mouse-x)) rotateX(var(--mouse-y)) translateY(3vh);
+  transform: rotateY(var(--mouse-x, 0deg)) rotateX(var(--mouse-y, 0deg)) translateY(3vh);
   transform-style: preserve-3d;
   margin: -999rem;
   padding: 999rem;
