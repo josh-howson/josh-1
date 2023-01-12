@@ -243,7 +243,7 @@ h1 .title {
   grid-template-areas: "center";
   place-items: center;
   overflow: hidden;
-  transform: rotateY(var(--mouse-x)) rotateX(var(--mouse-y));
+  transform: rotateY(var(--mouse-x)) rotateX(var(--mouse-y)) translateY(3vh);
   transform-style: preserve-3d;
   margin: -999rem;
   padding: 999rem;
@@ -442,7 +442,7 @@ nav a svg {
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --primary-saturation: 50%;
-    --primary-lightness: 60%;
+    --primary-lightness: 45%;
     --canvas-hue: 0;
     --canvas-saturation: 0%;
     --canvas-lightness: 95%;
@@ -460,7 +460,7 @@ nav a svg {
 
 :root[data-theme="light"] {
   --primary-saturation: 50%;
-  --primary-lightness: 60%;
+  --primary-lightness: 45%;
   --canvas-hue: 0;
   --canvas-saturation: 0%;
   --canvas-lightness: 95%;
