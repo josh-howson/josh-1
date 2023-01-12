@@ -37,7 +37,7 @@ const portrait = document.querySelector(".ring-section .portrait");
 portrait.addEventListener("mousemove", e => {
   // only handle mouse events, not touch
   let x, y
-  const multiplier = .2;
+  const multiplier = .4;
   if (e.type === "touchmove") {
     x = .5;
     y = .5;
