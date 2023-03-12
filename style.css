@@ -332,19 +332,28 @@ nav a {
 }
 
 nav a svg {
+  --icon-size: 1.25em;
   fill: currentColor;
-  height: 1.25em;
-  width: 1.25em;
+  height: var(--icon-size);
+  width: var(--icon-size);
 }
 
 @media (max-width:29.99em) {
   nav a svg {
-    height: 2.5em;
-    width: 2.5em;
+    --icon-size: 2.5em;
   }
 
   nav a svg+span {
     display: none;
+  }
+}
+
+@media (max-width: 25.99em) {
+  nav .resume {
+    margin: 0 100%;
+  }
+  nav a svg {
+    --icon-size: 1.8em;
   }
 }
 
