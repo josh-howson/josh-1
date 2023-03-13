@@ -34,7 +34,8 @@
   color-scheme: dark;
 
   /* Primary color */
-  --primary-hue: 28;
+  /* --primary-hue: 28; */
+  --primary-hue: 295;
   --primary-saturation: 66%;
   --primary-lightness: 68%;
   --hsl-primary: var(--primary-hue), var(--primary-saturation), var(--primary-lightness);
@@ -282,6 +283,7 @@ h1 .title {
   z-index: 1;
   overflow: hidden;
   opacity: 0;
+  object-fit: cover;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1), 0 .25rem .25rem rgba(0, 0, 0, .1);
   border: .4em solid hsla(var(--hsl-canvas-emphasis), 1);
   /* forwards entry animation */
