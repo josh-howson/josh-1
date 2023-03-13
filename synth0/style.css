@@ -58,11 +58,12 @@ figure svg {
   width: 100%;
   height: 100%;
 }
+
 figure svg path {
   stroke: var(--color-text);
 }
 
-:disabled + figure svg path {
+:disabled+figure svg path {
   stroke: var(--text-disabled);
 }
 
@@ -78,9 +79,11 @@ figure svg path {
   0% {
     outline-offset: 2px;
   }
+
   50% {
     outline-offset: 5px;
   }
+
   100% {
     outline-offset: 2px;
   }
@@ -92,7 +95,8 @@ input[type="checkbox"] {
   margin-right: -.5em;
 }
 
-select {
+select,
+button {
   padding: .2em .5em;
   font-weight: bold;
 }
