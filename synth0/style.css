@@ -1,0 +1,98 @@
+:root {
+  --color-text: #444;
+  --text-disabled: #ccc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #ccc;
+    --text-disabled: #444;
+  }
+}
+
+body {
+  font-family: sans-serif;
+  color: var(--color-text);
+}
+
+.play-pause {
+  display: flex;
+  align-items: baseline;
+  gap: .5em;
+  padding: .2em 1rem .7em;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 999rem;
+  background: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.play-pause::before {
+  content: '\25B6';
+  font-size: 1.2rem
+}
+
+.play-pause[data-playing="true"]::before {
+  content: '\23F8';
+}
+
+fieldset {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+legend {
+  font-weight: bold;
+}
+
+figure {
+  width: 2.5em;
+  height: 2.5em;
+  margin: 0;
+}
+
+figure svg {
+  width: 100%;
+  height: 100%;
+}
+figure svg path {
+  stroke: var(--color-text);
+}
+
+:disabled + figure svg path {
+  stroke: var(--text-disabled);
+}
+
+#start:not(:disabled) {
+  outline: 2px solid limegreen;
+  outline-offset: 2px;
+  animation: pulse 1s infinite;
+}
+
+/* animate pulse the outline */
+
+@keyframes pulse {
+  0% {
+    outline-offset: 2px;
+  }
+  50% {
+    outline-offset: 5px;
+  }
+  100% {
+    outline-offset: 2px;
+  }
+}
+
+input[type="checkbox"] {
+  width: 1.8em;
+  height: 1.8em;
+  margin-right: -.5em;
+}
+
+select {
+  padding: .2em .5em;
+  font-weight: bold;
+}
