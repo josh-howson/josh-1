@@ -49,7 +49,6 @@ addNode(oscillatorNode)
 // filter
 const filterNode = audioCtx.createBiquadFilter()
 filterNode.type = 'lowpass'
-// nodes.push(filterNode)
 addNode(filterNode)
 
 // post filter distortion
@@ -70,17 +69,14 @@ function makeDistortionCurve(amount) {
 
 // distortionNode.curve = makeDistortionCurve(100)
 distortionNode.oversample = "4x"
-// nodes.push(distortionNode)
 addNode(distortionNode)
 
 // mute
 const muteNode = audioCtx.createGain()
-// nodes.push(muteNode)
 addNode(muteNode)
 
 // output level
 const outputNode = audioCtx.createGain()
-// nodes.push(outputNode)
 addNode(outputNode)
 
 // start button
@@ -97,6 +93,18 @@ document.querySelector('#mute').addEventListener('click', e => {
   playing = !playing
   e.target.innerText = playing ? 'Mute' : 'Unmute'
 })
+
+function mute() {
+  muteNode.gain.setTargetAtTime(0, audioCtx.currentTime, SMOOTHING)
+  playing = false
+  muteNode.innerText = 'Unmute'
+}
+
+function unmute() {
+  muteNode.gain.setTargetAtTime(.5, audioCtx.currentTime, SMOOTHING)
+  playing = true
+  muteNode.innerText = 'Mute'
+}
 
 // oscillator type
 function setOscillatorType(value) {
@@ -171,7 +179,6 @@ outputLevel.addEventListener('input', e => {
 
 // connect nodes
 // final node is destination
-// nodes.push(audioCtx.destination)
 addNode(audioCtx.destination)
 connectNodes()
 
@@ -231,26 +238,113 @@ function reconnectAllNodes() {
 }
 
 function plotFloat32Array(array) {
-  const svgns = "http://www.w3.org/2000/svg";
-  const svg = document.createElementNS(svgns, "svg");
-  svg.setAttribute("viewBox", "-1 -1 2 2");
-  svg.setAttribute("width", "100");
-  svg.setAttribute("height", "100");
-  const path = document.createElementNS(svgns, "path");
-  const step = Math.max(Math.floor(array.length / 100), 1);
-  let d = `M${-1},${2 - 2 * (array[0] + 1)}`;
+  const svgns = "http://www.w3.org/2000/svg"
+  const svg = document.createElementNS(svgns, "svg")
+  svg.setAttribute("viewBox", "-1 -1 2 2")
+  svg.setAttribute("width", "100")
+  svg.setAttribute("height", "100")
+  const path = document.createElementNS(svgns, "path")
+  const step = Math.max(Math.floor(array.length / 100), 1)
+  let d = `M${-1},${2 - 2 * (array[0] + 1)}`
   for (let i = step; i < array.length; i += step) {
-    const x = -1 + i * (2 / (array.length - 1));
-    const y = 2 - 2 * (array[i] + 1);
-    d += ` L${x},${y}`;
+    const x = -1 + i * (2 / (array.length - 1))
+    const y = 2 - 2 * (array[i] + 1)
+    d += ` L${x},${y}`
   }
-  const lastX = -1 + (array.length - 1) * (2 / (array.length - 1));
-  d += ` L${lastX},${2 - 2 * (array[array.length - 1] + 1)}`;
-  path.setAttribute("d", d);
-  path.setAttribute("stroke-width", "0.1");
-  path.setAttribute("fill", "none");
-  svg.appendChild(path);
-  return svg;
+  const lastX = -1 + (array.length - 1) * (2 / (array.length - 1))
+  d += ` L${lastX},${2 - 2 * (array[array.length - 1] + 1)}`
+  path.setAttribute("d", d)
+  path.setAttribute("stroke-width", "0.1")
+  path.setAttribute("fill", "none")
+  svg.appendChild(path)
+  return svg
 }
 
 initValues()
+
+// MIDI
+let midi = null // global MIDIAccess object
+let activeMIDI = null
+
+const midiButton = document.querySelector('#get-midi')
+const midiDeviceInput = document.querySelector('#midi-device')
+
+// check if midi is already available
+navigator.permissions.query({ name: "midi", sysex: true }).then((result) => {
+  if (result.state === "granted") {
+    // Access granted.
+    midiButton.setAttribute('disabled', true)
+    midiButton.innerHTML = 'MIDI is ready'
+    return
+  } 
+  if (result.state === "prompt") {
+    // Ask the user whether to grant access
+    requestMIDI()
+    return
+  }
+  // Access denied.
+  midiButton.setAttribute('disabled', true)
+  midiButton.innerHTML = 'MIDI access denied'
+});
+
+function requestMIDI() {
+  midiButton.addEventListener('click', async e => {
+    function onMIDISuccess(midiAccess) {
+      midi = midiAccess
+      midiDeviceInput.innerHTML = ''
+      midi.inputs.forEach(input => {
+        midiDeviceInput.innerHTML += `<option value="${input.id}">${input.name}</option>`
+      })
+      midiButton.setAttribute('disabled', true)
+      midiButton.innerHTML = 'MIDI is ready'
+      setMidiDevice(midiDeviceInput.value)
+    }
+
+    function onMIDIFailure(msg) {
+      console.error(`Failed to get MIDI access - ${msg}`)
+    }
+
+    navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure)
+  })
+}
+
+midiDeviceInput.addEventListener('change', e => {
+  setMidiDevice(e.target.value)
+})
+
+function setMidiDevice(deviceId) {
+  if (activeMIDI) activeMIDI.removeEventListener('midimessage', handleMIDIMessage)
+  activeMIDI = midi.inputs.get(deviceId)
+  activeMIDI.addEventListener('midimessage', handleMIDIMessage)
+}
+
+function handleMIDIMessage(message) {
+  const [type, note, velocity] = message.data
+  switch(type) {
+    case 144:
+      noteOn(note, velocity)
+      break
+    case 128:
+      noteOff(note)
+      break
+  }
+}
+
+function noteOn(note, velocity) {
+  // const keyboardNote = getMidiNoteKeyName(note)
+  const noteFrequency = 440 * Math.pow(2, (note - 69) / 12)
+  oscillatorNode.frequency.setTargetAtTime(noteFrequency, audioCtx.currentTime, SMOOTHING)
+}
+
+function getMidiNoteKeyName(note) {
+  unmute()
+  const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+  const octave = Math.floor(note / 12) - 1
+  const noteName = noteNames[note % 12]
+  return `${noteName}${octave}`
+}
+
+function noteOff(note) {
+  // const keyboardNote = getMidiNoteKeyName(note)
+  mute()
+}
