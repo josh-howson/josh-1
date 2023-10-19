@@ -71,7 +71,6 @@
   --transition-fast: var(--duration-fast) var(--easing);
   --transition-medium: var(--duration-medium) var(--easing);
   --transition: var(--duration-medium) var(--easing);
-  overflow: hidden;
 }
 
 body {
@@ -84,10 +83,27 @@ body {
   padding: 0;
   transition-property: background-color, color;
   transition-duration: var(--duration-slow);
+  text-decoration-skip-ink: none;
 }
 
 :where(a) {
   font-weight: 600;
+}
+
+:where(p) {
+  line-height: 1.5;
+}
+
+:where(p + p) {
+  margin-top: 0;
+}
+
+:where(code) {
+  background: hsla(var(--hsl-primary), .2);
+  display: inline;
+  border-radius: .3em;
+  border: .1em solid hsla(var(--hsl-primary), .1);
+  font-size: smaller;
 }
 
 :where(a:link, a:visited) {
@@ -117,29 +133,13 @@ body {
 
 /* Main styles */
 
-body {
-  height: 100vh;
-  height: 100dvh;
-  /* allow scrolling if screen is really short */
-  min-height: 60rem;
-  display: grid;
-  grid-template-areas:
-    "title"
-    "rings"
-    "nav";
-  place-content: space-between center;
-  grid-template-columns: 1fr;
-  grid-template-rows: 33% 1fr auto;
-  perspective: 120rem;
-  overflow: hidden;
-}
-
 /* dark mode toggler */
 
 .theme-toggle {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 0;
+  right: 0;
+  margin: 1rem 1rem 0 0;
 }
 
 .theme-toggle label {
@@ -176,7 +176,7 @@ body {
 
 .theme-toggle input:checked+label::after {
   content: "🌞";
-  transform: translateX(100%);
+  transform: translateX(100%) rotate(360deg);
 }
 
 .theme-toggle input:focus-visible+label {
@@ -188,14 +188,40 @@ body {
   outline: .2rem solid var(--primary-500);
 }
 
-@media (min-width: 30em) {
+@media (min-width: 35em) {
   .theme-toggle {
-    top: 7vh;
-    right: 5vw;
+    top: 0;
+    right: 0;
+    margin: calc(2vw + 4rem) 5vw 0 0;
   }
 }
 
-h1 {
+h1:not(.hp-heading) {
+  margin-top: 1em;
+}
+
+/* Homepage */
+:root.homepage {
+  overflow: hidden;
+}
+
+.homepage body {
+  height: 100vh;
+  height: 100dvh;
+  /* allow scrolling if screen is really short */
+  min-height: 60rem;
+  display: grid;
+  grid-template-areas:
+  "title"
+  "rings"
+    "nav";
+  place-content: space-between center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 33% 1fr auto;
+  perspective: 120rem;
+  overflow: hidden;
+}
+.hp-heading {
   grid-area: title;
   text-align: center;
   margin: 5rem;
@@ -207,28 +233,28 @@ h1 {
   align-items: center;
 }
 
-h1 .name {
+.hp-heading .name {
   font-size: 1.25em;
   margin-top: .25em;
   font-weight:300;
 }
 
-h1 .title {
+.hp-heading .title {
   color: var(--primary-500);
   font-size: .5em;
   order:-1
 }
 
 @media (min-aspect-ratio: 4/1) {
-  body {
+  .homepage body {
     overflow: auto;
   }
 
-  h1 {
+  .hp-heading {
     margin-top: .5em;
   }
 
-  nav {
+  .homepage .nav {
     padding-bottom: .5em;
   }
 }
@@ -316,45 +342,50 @@ h1 .title {
   animation: pulseScale 5s var(--start-delay) infinite ease, fadeIn 5s var(--start-delay) forwards;
 }
 
-nav {
-  grid-area: nav;
+.nav {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  font-size: .875em;
-  gap: 3em;
+  font-size: .75em;
+  gap: 1.5em;
   padding: 4em;
 }
 
-nav a {
+.homepage .nav {
+  grid-area: nav;
+  font-size: .875em;
+  gap: 3em;
+}
+
+.nav a {
   display: flex;
   align-items: center;
   gap: .5em;
 }
 
-nav a svg {
+.nav a svg {
   --icon-size: 1.25em;
   fill: currentColor;
   height: var(--icon-size);
   width: var(--icon-size);
 }
 
-@media (max-width:29.99em) {
-  nav a svg {
+@media (max-width:34.99em) {
+  .nav a svg {
     --icon-size: 2.5em;
   }
 
-  nav a svg+span {
+  .nav a svg+span {
     display: none;
   }
 }
 
 @media (max-width: 25.99em) {
-  nav .resume {
+  .nav .resume {
     margin: 0 100%;
   }
-  nav a svg {
+  .nav a svg {
     --icon-size: 1.8em;
   }
 }
@@ -447,6 +478,7 @@ nav a svg {
     scale: 1;
   }
 }
+/* /Homepage */
 
 /* Light mode */
 
@@ -483,3 +515,33 @@ nav a svg {
   --visited-saturation: 70%;
   --visited-lightness: 0%;
 }
+
+/* Holy grail page layout */
+.holy-grail {
+  --spacing-1:          calc(15vw - 2rem);
+  --max-content-width:  60ch;
+  --gap:                0px;
+  --column-count:       12;
+  --min-gutter-width:   var(--spacing-1);
+  --gutter-width:       minmax(var(--min-gutter-width), 1fr);
+  --max-column-size:    calc((var(--max-content-width) - (var(--gap) * (var(--column-count) - 1))) / var(--column-count));
+  --content-columns:    repeat(var(--column-count), minmax(0px, var(--max-column-size)));
+
+  display:                grid;
+  gap:                    0 var(--gap);
+  grid-auto-rows:         min-content;
+  grid-template-columns:  [start] var(--gutter-width) [content-start] var(--content-columns) [content-end] var(--gutter-width) [end];
+}
+
+.holy-grail > *,
+.layout-item {
+  --start:      calc(var(--column-start) + 1);
+  --end:        calc(var(--column-end) + 2);
+  --start-end:  var(--start, content-start) / var(--end, content-end);
+
+  grid-column:  var(--column, var(--start-end));
+}
+
+.fluid {grid-column: 1 / -1;}
+
+/* /Holy grail page layout */

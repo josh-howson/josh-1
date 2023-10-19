@@ -34,23 +34,25 @@ if (currentTheme == "light") {
 // track mouse movement on the .ring-section and update the CSS variables
 // css property is a percentage
 const portrait = document.querySelector(".ring-section .portrait");
-portrait.addEventListener("mousemove", e => {
-  // only handle mouse events, not touch
-  let x, y
-  const multiplier = .4;
-  if (e.type === "touchmove") {
-    x = .5;
-    y = .5;
-  } else {
-    x = e.offsetX / portrait.offsetWidth;
-    y = e.offsetY / portrait.offsetHeight;
-  }
-  document.documentElement.style.setProperty("--mouse-x", (x * 100 - 50) * multiplier + "deg");
-  document.documentElement.style.setProperty("--mouse-y", (y * -100 + 50) * multiplier + "deg");
-});
+if (portrait) {
+  portrait.addEventListener("mousemove", e => {
+    // only handle mouse events, not touch
+    let x, y
+    const multiplier = .4;
+    if (e.type === "touchmove") {
+      x = .5;
+      y = .5;
+    } else {
+      x = e.offsetX / portrait.offsetWidth;
+      y = e.offsetY / portrait.offsetHeight;
+    }
+    document.documentElement.style.setProperty("--mouse-x", (x * 100 - 50) * multiplier + "deg");
+    document.documentElement.style.setProperty("--mouse-y", (y * -100 + 50) * multiplier + "deg");
+  });
 
-// reset on mouseout
-portrait.addEventListener("mouseout", e => {
-  document.documentElement.style.setProperty("--mouse-x", "0deg");
-  document.documentElement.style.setProperty("--mouse-y", "0deg");
-});
+  // reset on mouseout
+  portrait.addEventListener("mouseout", e => {
+    document.documentElement.style.setProperty("--mouse-x", "0deg");
+    document.documentElement.style.setProperty("--mouse-y", "0deg");
+  });
+}
