@@ -47,7 +47,7 @@
       position: sticky;
       top: 2rem;
     }
-    .project-graphic img {
+    .project-graphic .project-image {
       display: block;
       width: 100%;
       height: auto;
@@ -118,7 +118,7 @@
         max-width: 375px;
         align-self: center;
       }
-      .project-graphic img {
+      .project-graphic .project-image {
         object-fit: cover;
       }
     }
@@ -165,7 +165,7 @@
     <h1>My projects</h1>
     <article>
       <div class="project-graphic" data-project-url="https://www.fantanosevens.com">
-        <img loading="eager" src="/images/fantanosevens-mobile.png" alt="Fantano sevens web app screenshot"/>
+        <img class="project-image" loading="eager" src="/images/fantanosevens-mobile.png" alt="Fantano sevens web app screenshot"/>
         <button class="try button-floating">Load</button>
         <iframe style="display:none"></iframe>
       </div>
@@ -197,7 +197,7 @@
     </article>
     <article>
       <div class="project-graphic" data-project-url="https://yt-thumbnail-preview.joshhowson.com/">
-        <img loading="lazy" src="/images/yt-thumbnail-download-mobile.png" alt="YT Thumbnail Downloader web app screenshot"/>
+        <img class="project-image" loading="lazy" src="/images/yt-thumbnail-download-mobile.png" alt="YT Thumbnail Downloader web app screenshot"/>
         <button class="try button-floating">Load</button>
         <iframe style="display:none"></iframe>
       </div>
@@ -225,7 +225,7 @@
     </article>
     <article>
       <div class="project-graphic" data-project-url="https://ti-snapshop.vercel.app/">
-        <img loading="lazy" src="/images/ti-snapshop-mobile.png" alt="snapshop web app screenshot"/>
+        <img class="project-image" loading="lazy" src="/images/ti-snapshop-mobile.png" alt="snapshop web app screenshot"/>
         <button class="try button-floating">Load</button>
         <iframe style="display:none"></iframe>
       </div>
@@ -252,9 +252,54 @@
         <a class="try-full" href="https://ti-snapshop.vercel.app/" target="_blank">Try it here</a>
       </div>
     </article>
+
+    <article>
+      <div class="project-graphic" data-project-url="https://web.archive.org/web/20220810143654/https://www.boatline.com/search/sail?category=Sail">
+        <!-- <img class="project-image" loading="lazy" src="/images/rvt3-mobile.mp4" alt="synth0 web app screenshot"/> -->
+        <video class="project-image" width="320" height="240" autoplay loop>
+          <source src="/images/rvt3-mobile.mp4" type="video/mp4" />
+        </video>
+        <!-- <button class="try button-floating">Load</button> -->
+        <!-- <iframe style="display:none"></iframe> -->
+      </div>
+      <div>
+        <h2>RVT 3.0 Redesign</h2>
+        <p>RV classifieds website UI overhaul.</p>
+        <div class="tags">
+          <div>Vue.js</div>
+          <div>Elastic Search</div>
+          <div>CSS</div>
+          <div>PHP</div>
+        </div>
+        <p>A large UI overhaul of the home, search and product pages for <a target="_blank" href="https://rvt.com">RVT.com</a></p>
+        <p>Unfortunately after getting to 95% completion, the business pivoted and this work was never released. It was so pretty, what a shame.</p>
+      </div>
+    </article>
+
+    <article>
+      <div class="project-graphic" data-project-url="https://web.archive.org/web/20220810143654/https://www.boatline.com/search/sail?category=Sail">
+        <img class="project-image" loading="lazy" src="/images/boatline-mobile.png" alt="synth0 web app screenshot"/>
+        <!-- <button class="try button-floating">Load</button> -->
+        <!-- <iframe style="display:none"></iframe> -->
+      </div>
+      <div>
+        <h2>Boatline</h2>
+        <p>Marine classifieds website.</p>
+        <div class="tags">
+          <div>Next.js</div>
+          <div>React</div>
+          <div>SSR</div>
+          <div>Algolia</div>
+          <div>CSS Modules</div>
+        </div>
+        <p>I was the lead UI engineer for this greenfield development project of a marine classifieds website for Trader Interactive from 2020-2023. We used cutting edge SSR frameworks in this build. Boatline has technically existed for over almost two decades, but it's been sitting idle since its birth, and was given new life in 2020.</p>
+        <p>Boatline is now <a target="_blank" href="https://boatmart.com">Boatmart.com</a> (I did not work on Boatmart).</p>
+        <a class="try-full" href="https://web.archive.org/web/20231031144503/https://www.boatline.com/search/sail?category=Sail" target="_blank">See it on WaybackMachine</a>
+      </div>
+    </article>
     <article>
       <div class="project-graphic" data-project-url="https://josh-howson.github.io/synth0/">
-        <img loading="lazy" src="/images/synth0-mobile.png" alt="synth0 web app screenshot"/>
+        <img class="project-image" loading="lazy" src="/images/synth0-mobile.png" alt="synth0 web app screenshot"/>
         <button class="try button-floating">Load</button>
         <iframe style="display:none"></iframe>
       </div>
@@ -281,7 +326,7 @@
     </article>
     <article>
       <div class="project-graphic" data-project-url="https://josh-howson.github.io/HappyHeli/">
-        <img loading="lazy" src="/images/happyheli-mobile.png" alt="HappyHeli web app screenshot"/>
+        <img class="project-image" loading="lazy" src="/images/happyheli-mobile.png" alt="HappyHeli web app screenshot"/>
         <button class="try button-floating">Load</button>
         <iframe style="display:none"></iframe>
       </div>
