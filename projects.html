@@ -13,11 +13,114 @@
 
   <style>
     article {
-      margin: 0 0 2em 0;
+      display: flex;
+      align-items: start;
+      gap: 2em;
+      margin-bottom: calc(3em + 4vw);
+    }
+    article:first-of-type {
+      margin-top: 3em;
+    }
+    article h2 {
+      margin: 0;
+    }
+    article h2 a:hover {
+      color: var(--primary-500)
+    }
+    article h2 svg {
+      height: 1em;
+      width: 1em;
+      display: inline-block;
+      margin-inline: .25em;
+      vertical-align: middle;
+      fill: currentColor
+    }
+    :where(article:nth-child(odd)) {
+      flex-direction: row-reverse;
+    }
+    .project-graphic {
+      width: 320px;
+      flex: 0 0 auto;
+      border-radius: 1.6rem;
+      overflow: hidden;
+      box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1), 0 .25rem .25rem rgba(0, 0, 0, .1);
+      position: sticky;
+      top: 2rem;
+    }
+    .project-graphic img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .project-graphic::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transition: all .5s ease;
+      pointer-events: none;
+    }
+    .project-graphic:has(.try):hover::after {
+      background-color: rgba(0, 0, 0, .3);
+      backdrop-filter: blur(5px);
+    }
+    .project-graphic iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      top: 0;
+      left: 0;
+    }
+    .project-graphic .try {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 2rem;
+      animation: pulse .75s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+    .try-full {
+      text-align: right;
+      margin-top: 2em;
+      display: inline-block;
+    }
+    .tags {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 1rem;
+      margin-top: 1em;
+      font-weight: 600;
+    }
+    .tags > * {
+      font-size: .7em;
+      padding: .5em .75em;
+      background: var(--canvas-emphasis);
+      border-radius: .25em;
     }
 
-    .codepen-container {
-      margin: 1em 0;
+    @keyframes pulse {
+      from {
+        scale: 1;
+      }
+      to {
+        scale: .9;
+      }
+    }
+    @media (max-width: 1199px) {
+      article {
+        flex-direction: column;
+      }
+      .project-graphic {
+        position: relative;
+        width: 100%;
+        max-width: 375px;
+        align-self: center;
+      }
+      .project-graphic img {
+        object-fit: cover;
+      }
     }
   </style>
 </head>
@@ -26,6 +129,14 @@
   <header>
     <nav class="nav">
       <a href="/">Home</a>
+      <a href="/projects.html" aria-label="Codepen" style="color: var(--primary-500)">
+        <!-- <svg viewBox="0 0 100 100" width="100" height="100">
+          <path
+            d="M100 34.2c-.4-2.6-3.3-4-5.3-5.3-3.6-2.4-7.1-4.7-10.7-7.1-8.5-5.7-17.1-11.4-25.6-17.1-2-1.3-4-2.7-6-4-1.4-1-3.3-1-4.8 0-5.7 3.8-11.5 7.7-17.2 11.5L5.2 29C3 30.4.1 31.8 0 34.8c-.1 3.3 0 6.7 0 10v16c0 2.9-.6 6.3 2.1 8.1 6.4 4.4 12.9 8.6 19.4 12.9 8 5.3 16 10.7 24 16 2.2 1.5 4.4 3.1 7.1 1.3 2.3-1.5 4.5-3 6.8-4.5 8.9-5.9 17.8-11.9 26.7-17.8l9.9-6.6c.6-.4 1.3-.8 1.9-1.3 1.4-1 2-2.4 2-4.1V37.3c.1-1.1.2-2.1.1-3.1 0-.1 0 .2 0 0zM54.3 12.3 88 34.8 73 44.9 54.3 32.4V12.3zm-8.6 0v20L27.1 44.8 12 34.8l33.7-22.5zM8.6 42.8 19.3 50 8.6 57.2V42.8zm37.1 44.9L12 65.2l15-10.1 18.6 12.5v20.1zM50 60.2 34.8 50 50 39.8 65.2 50 50 60.2zm4.3 27.5v-20l18.6-12.5 15 10.1-33.6 22.4zm37.1-30.5L80.7 50l10.8-7.2-.1 14.4z">
+          </path>
+        </svg> -->
+        <span>Projects</span>
+      </a>
       <a class="resume" href="/josh-howson-resume.pdf" target="_blank">
         <span>Resume</span>
       </a>
@@ -36,14 +147,6 @@
           </path>
         </svg>
         <span>GitHub</span>
-      </a>
-      <a href="/codepen.html" aria-label="Codepen" style="color: var(--primary-500)">
-        <svg viewBox="0 0 100 100" width="100" height="100">
-          <path
-            d="M100 34.2c-.4-2.6-3.3-4-5.3-5.3-3.6-2.4-7.1-4.7-10.7-7.1-8.5-5.7-17.1-11.4-25.6-17.1-2-1.3-4-2.7-6-4-1.4-1-3.3-1-4.8 0-5.7 3.8-11.5 7.7-17.2 11.5L5.2 29C3 30.4.1 31.8 0 34.8c-.1 3.3 0 6.7 0 10v16c0 2.9-.6 6.3 2.1 8.1 6.4 4.4 12.9 8.6 19.4 12.9 8 5.3 16 10.7 24 16 2.2 1.5 4.4 3.1 7.1 1.3 2.3-1.5 4.5-3 6.8-4.5 8.9-5.9 17.8-11.9 26.7-17.8l9.9-6.6c.6-.4 1.3-.8 1.9-1.3 1.4-1 2-2.4 2-4.1V37.3c.1-1.1.2-2.1.1-3.1 0-.1 0 .2 0 0zM54.3 12.3 88 34.8 73 44.9 54.3 32.4V12.3zm-8.6 0v20L27.1 44.8 12 34.8l33.7-22.5zM8.6 42.8 19.3 50 8.6 57.2V42.8zm37.1 44.9L12 65.2l15-10.1 18.6 12.5v20.1zM50 60.2 34.8 50 50 39.8 65.2 50 50 60.2zm4.3 27.5v-20l18.6-12.5 15 10.1-33.6 22.4zm37.1-30.5L80.7 50l10.8-7.2-.1 14.4z">
-          </path>
-        </svg>
-        <span>My codepens</span>
       </a>
       <a href="https://www.linkedin.com/in/joshhowson/" target="_blank" aria-label="LinkedIn">
         <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
@@ -59,166 +162,188 @@
     <label for="colorScheme"></label>
   </div>
   <main class="holy-grail">
-    <h1>Some codepens I made</h1>
-
-    <p>These are a few neat things I scribbled together over on my <a href="https://codepen.io/josh-howson" target="_blank">Codepen profile</a>.</p>
-
-    <article class="holy-grail fluid">
-      <h2>IntersectionObserver fruit slider</h2>
-
-      <p>Here I'm demonstrating how IntersectionObserver allows you to be more declarative with your slide change logic and tracking. Instead of programmatically animating the slides we're using native DOM scrolling and simply observing where the slider is at.</p>
-
-      <div class="codepen-container fluid holy-grail" style="--max-content-width: 70ch">
-        <p class="codepen" data-height="700" data-default-tab="result" data-slug-hash="xxzeQPL" data-user="josh-howson" style="height: 700px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-          <span>See the Pen <a href="https://codepen.io/josh-howson/pen/xxzeQPL">
-          Fruit slider</a> by Josh Howson (<a href="https://codepen.io/josh-howson">@josh-howson</a>)
-          on <a href="https://codepen.io">CodePen</a>.</span>
-        </p>
+    <h1>Some of my projects</h1>
+    <article>
+      <div class="project-graphic" data-project-url="http://www.fantanosevens.com">
+        <img loading="eager" src="/images/fantanosevens-mobile.png" alt="Fantano sevens web app screenshot"/>
+        <button class="try button-floating">Load</button>
+        <iframe style="display:none"></iframe>
       </div>
-
-      <p>The result is a much simpler slide tracking strategy where we're not concerned with how to make the slide changes, rather we simply decide what to do when the slides do change.</p>
-    </article>
-
-    <article class="holy-grail fluid">
-      <h2>Swipe-n-Tap</h2>
-
-      <p>This one's also using IntersectionObserver. I came up with this method to natively drag & drop a switch, with fallbacks for mouse/keyboard folks too. It actually uses some trickery to give the impression that you're dragging and dropping, but in reality it's hacking native scroll behaviors to do reverse scrolling.</p>
-
-      <p>I have 3 elements: Spacer &rarr; Blue selection indicator &rarr; Spacer. As you scroll the element further to the right, the selection comes to the left, and vice-versa. When IntersectionObserver sees that you've scrolled more than halfway it updates the state and you can do whatever you want! In this case we're switching between two categories of results.</p>
-
-      <div class="codepen-container fluid holy-grail" style="--max-content-width: 70ch">
-        <p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="YzYobyE" data-user="josh-howson" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-          <span>See the Pen <a href="https://codepen.io/josh-howson/pen/YzYobyE">
-          Swipe n Tap</a> by Josh Howson (<a href="https://codepen.io/josh-howson">@josh-howson</a>)
-          on <a href="https://codepen.io">CodePen</a>.</span>
-        </p>
-      </div>
-
-      <p>This would be cumbersome to implement with JS. Drag event handling isn't easy, but our browsers take care of this behavior by default so why not leverage it?</p>
-    </article>
-
-    <article class="holy-grail fluid">
-      <h2>CSS 62.5% font size converter</h2>
-
-      <p>It's so much easier to work with rems when the root font size is 10px, or better yet: 62.5%.</p>
-
-      <p> Paste your whole stylesheet into this tool and it will multiply all rem values by 1.6 so you can finally switch from <code>:root { font-size: 16px; }</code> or <code>:root { font-size: 100%; }</code> to <code>:root { font-size: 62.5% }</code>.</p>
-      
-      <p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="abqmaWr" data-user="josh-howson" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-        <span>See the Pen <a href="https://codepen.io/josh-howson/pen/abqmaWr">
-        CSS rem converter to 62.5%</a> by Josh Howson (<a href="https://codepen.io/josh-howson">@josh-howson</a>)
-        on <a href="https://codepen.io">CodePen</a>.</span>
-      </p>
-    </article>
-
-    <article class="holy-grail fluid">
-      <h2>Fun button click effect</h2>
-      
-      <p>Boy oh boy, aren't they so fun?! I hope I can do something like this on prod someday.</p>
-
-      <div class="codepen-container fluid holy-grail" style="--max-content-width: 70ch">
-        <p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="zYpRweQ" data-user="josh-howson" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-          <span>See the Pen <a href="https://codepen.io/josh-howson/pen/zYpRweQ">
-          Very fun buttons</a> by Josh Howson (<a href="https://codepen.io/josh-howson">@josh-howson</a>)
-          on <a href="https://codepen.io">CodePen</a>.</span>
-        </p>
+      <div>
+        <h2>
+          fantano sevens
+          <a href="https://github.com/josh-howson/fantano-sevens" target="_blank" aria-label="View code on GitHub">
+            <svg viewBox="0 0 256 256" width="256" height="256">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M128.5 19C66.93 19 17 68.8 17 130.25c0 49.15 31.95 90.85 76.25 105.56 5.57 1.03 7.62-2.41 7.62-5.35 0-2.66-.1-11.42-.15-20.72-31.02 6.73-37.57-13.12-37.57-13.12-5.07-12.86-12.38-16.28-12.38-16.28-10.11-6.9.77-6.76.77-6.76 11.2.78 17.09 11.46 17.09 11.46 9.94 17.01 26.08 12.1 32.44 9.25 1-7.19 3.9-12.1 7.08-14.88-24.76-2.8-50.8-12.35-50.8-54.97 0-12.15 4.36-22.07 11.5-29.86-1.17-2.8-4.98-14.12 1.07-29.45 0 0 9.36-2.99 30.67 11.4 8.9-2.46 18.44-3.7 27.91-3.74 9.48.05 19.02 1.28 27.93 3.75 21.28-14.4 30.63-11.4 30.63-11.4 6.07 15.32 2.26 26.63 1.1 29.44 7.15 7.79 11.47 17.71 11.47 29.86 0 42.72-26.08 52.13-50.9 54.89 3.99 3.45 7.55 10.22 7.55 20.6 0 14.88-.13 26.86-.13 30.53 0 2.96 2.01 6.43 7.66 5.33C208.1 221.07 240 179.4 240 130.25 240 68.8 190.08 19 128.5 19Z">
+              </path>
+            </svg>
+          </a>
+        </h2>
+        <p>A music discovery tool.</p>
+        <div class="tags">
+          <div>Vue.js</div>
+          <div>Nuxt.js</div>
+          <div>Spotify API</div>
+          <div>PWA</div>
+        </div>
+        <p>It randomly selects an album that <a href="https://www.youtube.com/user/theneedledrop" target="_blank">Anthony Fantano</a> has rated a 7 or higher.</p>
+        <p>I made it because I always want to discover new music. But sometimes it's tiring to search for new albums.</p>
+        <p>So I built tool which randomly selects an album which popular critic Anthony Fantano has positively reviewed. The app makes it easy to immediately start listening with its Spotify integration. It also lets you keep track of the albums you've listened to. And you can log it if you've listened through, like it if it's up your alley.</p>
+        <p>Fantano review data comes from <a target="_blank" href="https://github.com/garcia-santiago/fantanoScraper">this scraper</a> maintained by <a href="https://github.com/garcia-santiago" target="_blank">@garcia-santiago</a>.</p>
+        <a class="try-full" href="http://www.fantanosevens.com" target="_blank">Try it here</a>
       </div>
     </article>
-
-    <article class="holy-grail fluid">
-      <h2>Button hitbox strategies</h2>
-      
-      <p>Sometimes we want something to be more clickable for accessibility. But sometimes we want to keep the layout as-is.</p>
-
-      <p>In this pen I explore some options, as well as a hack, to make things bigger.</p>
-
-      <div class="codepen-container fluid holy-grail" style="--max-content-width: 70ch">
-        <p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="poxxbYM" data-user="josh-howson" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-          <span>See the Pen <a href="https://codepen.io/josh-howson/pen/poxxbYM">
-          Button hitbox strategies</a> by Josh Howson (<a href="https://codepen.io/josh-howson">@josh-howson</a>)
-          on <a href="https://codepen.io">CodePen</a>.</span>
-        </p>
+    <article>
+      <div class="project-graphic" data-project-url="https://yt-thumbnail-preview.joshhowson.com/">
+        <img loading="lazy" src="/images/yt-thumbnail-download-mobile.png" alt="YT Thumbnail Downloader web app screenshot"/>
+        <button class="try button-floating">Load</button>
+        <iframe style="display:none"></iframe>
+      </div>
+      <div>
+        <h2>
+          YT Thumbnail Previewer
+          <a href="https://github.com/josh-howson/yt-thumbnail-preview" target="_blank" aria-label="View code on GitHub">
+            <svg viewBox="0 0 256 256" width="256" height="256">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M128.5 19C66.93 19 17 68.8 17 130.25c0 49.15 31.95 90.85 76.25 105.56 5.57 1.03 7.62-2.41 7.62-5.35 0-2.66-.1-11.42-.15-20.72-31.02 6.73-37.57-13.12-37.57-13.12-5.07-12.86-12.38-16.28-12.38-16.28-10.11-6.9.77-6.76.77-6.76 11.2.78 17.09 11.46 17.09 11.46 9.94 17.01 26.08 12.1 32.44 9.25 1-7.19 3.9-12.1 7.08-14.88-24.76-2.8-50.8-12.35-50.8-54.97 0-12.15 4.36-22.07 11.5-29.86-1.17-2.8-4.98-14.12 1.07-29.45 0 0 9.36-2.99 30.67 11.4 8.9-2.46 18.44-3.7 27.91-3.74 9.48.05 19.02 1.28 27.93 3.75 21.28-14.4 30.63-11.4 30.63-11.4 6.07 15.32 2.26 26.63 1.1 29.44 7.15 7.79 11.47 17.71 11.47 29.86 0 42.72-26.08 52.13-50.9 54.89 3.99 3.45 7.55 10.22 7.55 20.6 0 14.88-.13 26.86-.13 30.53 0 2.96 2.01 6.43 7.66 5.33C208.1 221.07 240 179.4 240 130.25 240 68.8 190.08 19 128.5 19Z">
+              </path>
+            </svg>
+          </a>
+        </h2>
+        <p>Test thumbnail next to real videos.</p>
+        <div class="tags">
+          <div>Vue.js</div>
+          <div>Vite</div>
+          <div>SCSS</div>
+          <div>Youtube Media API</div>
+        </div>
+        <p>This tool mimicks a youtube search page by fetching real videos using the Youtube Media API, and lets you upload a thumbnail, add a title and see the preview.</p>
+        <a class="try-full" href="http://yt-thumbnail-preview.joshhowson.com" target="_blank">Try it here</a>
       </div>
     </article>
-
-    <article class="holy-grail fluid">
-      <h2>Variable count photo collage</h2>
-      
-      <p>A prototype for a photo gallery collage layout where the number of images displayed could be anywhere from 1 to 6.</p>
-
-      <div class="codepen-container fluid holy-grail" style="--max-content-width: 100ch">
-        <p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="mdWXKda" data-user="josh-howson" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-          <span>See the Pen <a href="https://codepen.io/josh-howson/pen/mdWXKda">
-          BL VDP gallery</a> by Josh Howson (<a href="https://codepen.io/josh-howson">@josh-howson</a>)
-          on <a href="https://codepen.io">CodePen</a>.</span>
-        </p>
+    <article>
+      <div class="project-graphic" data-project-url="https://ti-snapshop.vercel.app/">
+        <img loading="lazy" src="/images/ti-snapshop-mobile.png" alt="snapshop web app screenshot"/>
+        <button class="try button-floating">Load</button>
+        <iframe style="display:none"></iframe>
+      </div>
+      <div>
+        <h2>
+          snapshop
+          <!-- <a href="https://github.com/josh-howson/vehicle-vision" target="_blank" aria-label="View code on GitHub">
+            <svg viewBox="0 0 256 256" width="256" height="256">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M128.5 19C66.93 19 17 68.8 17 130.25c0 49.15 31.95 90.85 76.25 105.56 5.57 1.03 7.62-2.41 7.62-5.35 0-2.66-.1-11.42-.15-20.72-31.02 6.73-37.57-13.12-37.57-13.12-5.07-12.86-12.38-16.28-12.38-16.28-10.11-6.9.77-6.76.77-6.76 11.2.78 17.09 11.46 17.09 11.46 9.94 17.01 26.08 12.1 32.44 9.25 1-7.19 3.9-12.1 7.08-14.88-24.76-2.8-50.8-12.35-50.8-54.97 0-12.15 4.36-22.07 11.5-29.86-1.17-2.8-4.98-14.12 1.07-29.45 0 0 9.36-2.99 30.67 11.4 8.9-2.46 18.44-3.7 27.91-3.74 9.48.05 19.02 1.28 27.93 3.75 21.28-14.4 30.63-11.4 30.63-11.4 6.07 15.32 2.26 26.63 1.1 29.44 7.15 7.79 11.47 17.71 11.47 29.86 0 42.72-26.08 52.13-50.9 54.89 3.99 3.45 7.55 10.22 7.55 20.6 0 14.88-.13 26.86-.13 30.53 0 2.96 2.01 6.43 7.66 5.33C208.1 221.07 240 179.4 240 130.25 240 68.8 190.08 19 128.5 19Z">
+              </path>
+            </svg>
+          </a> -->
+        </h2>
+        <p>Visual search using AI.</p>
+        <div class="tags">
+          <div>ChatGPT</div>
+          <div>Vue.js</div>
+          <div>Nuxt.js</div>
+        </div>
+        <p>I teamed up with 2 colleagues for Trader Interactive's 2024 hackathon which took place over 3 days. Our goal was to leverage recent AI developments to search our vehicle classified websites with just an image. We used OpenAI API's Vision to accomplish this.</p>
+        <p>Just upload an image of a vehicle from your device and AI will automatically determine which of our dozen vehicle classified websites to send you to. It brings you straight to relevant search results for the make and model found in the image.</p>
+        <p>I also put together <a href="https://www.youtube.com/watch?v=CzF5fByN9Qk" target="_blank">a video</a> for the hackathon submission.</p>
+        <a class="try-full" href="https://ti-snapshop.vercel.app/" target="_blank">Try it here</a>
       </div>
     </article>
-
-    <article class="holy-grail fluid">
-      <h2>Making borders overlap images</h2>
-      
-      <p>I find that designers often want their images to have outlines which overlay the photo. Not a border on the outside of the image, but right on top of the image with reduced opacity.</p>
-
-      <p>This is the default behavior in design tools like Figma, but it's not as simple on the web because borders live the outside of a box's content.</p>
-
-      <p>Recently browsers started allowing for rounded corners on the outline property, but in 2023 support isn't quite there yet. This is what I always do to solve this.</p>
-
-      <div class="codepen-container fluid holy-grail" style="--max-content-width: 70ch">
-        <p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="QWxaxEX" data-user="josh-howson" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-          <span>See the Pen <a href="https://codepen.io/josh-howson/pen/QWxaxEX">
-          Border overlapping image</a> by Josh Howson (<a href="https://codepen.io/josh-howson">@josh-howson</a>)
-          on <a href="https://codepen.io">CodePen</a>.</span>
-        </p>
+    <article>
+      <div class="project-graphic" data-project-url="https://josh-howson.github.io/synth0/">
+        <img loading="lazy" src="/images/synth0-mobile.png" alt="synth0 web app screenshot"/>
+        <button class="try button-floating">Load</button>
+        <iframe style="display:none"></iframe>
+      </div>
+      <div>
+        <h2>
+          synth0
+          <a href="https://github.com/josh-howson/synth0" target="_blank" aria-label="View code on GitHub">
+            <svg viewBox="0 0 256 256" width="256" height="256">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M128.5 19C66.93 19 17 68.8 17 130.25c0 49.15 31.95 90.85 76.25 105.56 5.57 1.03 7.62-2.41 7.62-5.35 0-2.66-.1-11.42-.15-20.72-31.02 6.73-37.57-13.12-37.57-13.12-5.07-12.86-12.38-16.28-12.38-16.28-10.11-6.9.77-6.76.77-6.76 11.2.78 17.09 11.46 17.09 11.46 9.94 17.01 26.08 12.1 32.44 9.25 1-7.19 3.9-12.1 7.08-14.88-24.76-2.8-50.8-12.35-50.8-54.97 0-12.15 4.36-22.07 11.5-29.86-1.17-2.8-4.98-14.12 1.07-29.45 0 0 9.36-2.99 30.67 11.4 8.9-2.46 18.44-3.7 27.91-3.74 9.48.05 19.02 1.28 27.93 3.75 21.28-14.4 30.63-11.4 30.63-11.4 6.07 15.32 2.26 26.63 1.1 29.44 7.15 7.79 11.47 17.71 11.47 29.86 0 42.72-26.08 52.13-50.9 54.89 3.99 3.45 7.55 10.22 7.55 20.6 0 14.88-.13 26.86-.13 30.53 0 2.96 2.01 6.43 7.66 5.33C208.1 221.07 240 179.4 240 130.25 240 68.8 190.08 19 128.5 19Z">
+              </path>
+            </svg>
+          </a>
+        </h2>
+        <p>⚠️<em>Volume warning</em>⚠️</p>
+        <p>A simple browser-based synthesizer.</p>
+        <div class="tags">
+          <div>Web Audio API</div>
+          <div>MIDI Protocol</div>
+        </div>
+        <p>Audio engineering/sound design are among my top hobbies, so when I learned there was a Web Audio API which provides oscillators, filters and manipulation of audio signals in any imaginable way, I was very excited. So I built a simple synthesizer, and implemented MIDI protocol. This allows you to connect a MIDI instrument if you have one available.</p>
+        <a class="try-full" href="https://joshhowson.com/synth0" target="_blank">Try it here</a>
       </div>
     </article>
-
-    <article class="holy-grail fluid">
-      <h2>Sticky scroll to the bottom of the screen</h2>
-      
-      <p>I'm not sure how useful this one is, but it's an interesting exploration.</p>
-
-      <p>Have you ever tried making an element sticky to the bottom of the screen? It's not the typical behavior for <code>position: sticky</code>. Usually you want an element to be on the page, then when you scroll past it, rather than having it leave the page, it stays "stuck" to one of the edges of the scrolling element.</p>
-
-      <p>This is the opposite. Your element smoothly scrolls into view, and once it's 100% visible it sticks.</p>
-
-      <p>You usually need JS to make this work - usually you'll want to add a scroll event listener or use some other tool like IntersectionObserver, and after a certain scroll position you stick it to the bottom of your screen. This solution kind of accomplishes this using only CSS.</p>
-
-      <div class="codepen-container fluid holy-grail" style="--max-content-width: 70ch">
-        <p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="zYmgawM" data-user="josh-howson" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-          <span>See the Pen <a href="https://codepen.io/josh-howson/pen/zYmgawM">
-          insane</a> by Josh Howson (<a href="https://codepen.io/josh-howson">@josh-howson</a>)
-          on <a href="https://codepen.io">CodePen</a>.</span>
-        </p>
+    <article>
+      <div class="project-graphic" data-project-url="https://josh-howson.github.io/HappyHeli/">
+        <img loading="lazy" src="/images/happyheli-mobile.png" alt="HappyHeli web app screenshot"/>
+        <button class="try button-floating">Load</button>
+        <iframe style="display:none"></iframe>
+      </div>
+      <div>
+        <h2>
+          Happy Heli
+          <a href="https://github.com/josh-howson/happyheli" target="_blank" aria-label="View code on GitHub">
+            <svg viewBox="0 0 256 256" width="256" height="256">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M128.5 19C66.93 19 17 68.8 17 130.25c0 49.15 31.95 90.85 76.25 105.56 5.57 1.03 7.62-2.41 7.62-5.35 0-2.66-.1-11.42-.15-20.72-31.02 6.73-37.57-13.12-37.57-13.12-5.07-12.86-12.38-16.28-12.38-16.28-10.11-6.9.77-6.76.77-6.76 11.2.78 17.09 11.46 17.09 11.46 9.94 17.01 26.08 12.1 32.44 9.25 1-7.19 3.9-12.1 7.08-14.88-24.76-2.8-50.8-12.35-50.8-54.97 0-12.15 4.36-22.07 11.5-29.86-1.17-2.8-4.98-14.12 1.07-29.45 0 0 9.36-2.99 30.67 11.4 8.9-2.46 18.44-3.7 27.91-3.74 9.48.05 19.02 1.28 27.93 3.75 21.28-14.4 30.63-11.4 30.63-11.4 6.07 15.32 2.26 26.63 1.1 29.44 7.15 7.79 11.47 17.71 11.47 29.86 0 42.72-26.08 52.13-50.9 54.89 3.99 3.45 7.55 10.22 7.55 20.6 0 14.88-.13 26.86-.13 30.53 0 2.96 2.01 6.43 7.66 5.33C208.1 221.07 240 179.4 240 130.25 240 68.8 190.08 19 128.5 19Z">
+              </path>
+            </svg>
+          </a>
+        </h2>
+        <p>Look at him go.</p>
+        <div class="tags">
+          <div>SVG</div>
+          <div>CSS Animation</div>
+        </div>
+        <p>An exercise in SVG animation.</p>
+        <a class="try-full" href="https://josh-howson.github.io/HappyHeli/" target="_blank">Try it here</a>
       </div>
     </article>
-
-    <p>As you may have noticed, the drawback is that once you scroll to the end the element gets lost and unsticks itself right in the middle of the page.</p>
-
-    <p>Not perfect but maybe this behavior could have a use case...</p>
   </main>
-
+  <script>
+    const projectGraphics = document.querySelectorAll('.project-graphic');
+    projectGraphics.forEach(project => {
+      const siteUrl = project.dataset.projectUrl;
+      const iframe = project.querySelector('iframe');
+      const preview = project.querySelector('img');
+      const loadButton = project.querySelector('.try');
+      loadButton.addEventListener('click', () => {
+        iframe.src = siteUrl;
+        iframe.style.display = "";
+        loadButton.remove();
+        preview.style.visibility = 'hidden';
+      })
+    });
+  </script>
   <footer>
     <nav class="nav">
       <a href="/">Home</a>
-      <a class="resume" href="/josh-howson-resume.pdf" target="_blank">
-        <span>Resume</span>
-      </a>
-      <a href="https://github.com/josh-howson/" target="_blank" aria-label="GitHub">
-        <svg viewBox="0 0 256 256" width="256" height="256" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M128.5 19C66.93 19 17 68.8 17 130.25c0 49.15 31.95 90.85 76.25 105.56 5.57 1.03 7.62-2.41 7.62-5.35 0-2.66-.1-11.42-.15-20.72-31.02 6.73-37.57-13.12-37.57-13.12-5.07-12.86-12.38-16.28-12.38-16.28-10.11-6.9.77-6.76.77-6.76 11.2.78 17.09 11.46 17.09 11.46 9.94 17.01 26.08 12.1 32.44 9.25 1-7.19 3.9-12.1 7.08-14.88-24.76-2.8-50.8-12.35-50.8-54.97 0-12.15 4.36-22.07 11.5-29.86-1.17-2.8-4.98-14.12 1.07-29.45 0 0 9.36-2.99 30.67 11.4 8.9-2.46 18.44-3.7 27.91-3.74 9.48.05 19.02 1.28 27.93 3.75 21.28-14.4 30.63-11.4 30.63-11.4 6.07 15.32 2.26 26.63 1.1 29.44 7.15 7.79 11.47 17.71 11.47 29.86 0 42.72-26.08 52.13-50.9 54.89 3.99 3.45 7.55 10.22 7.55 20.6 0 14.88-.13 26.86-.13 30.53 0 2.96 2.01 6.43 7.66 5.33C208.1 221.07 240 179.4 240 130.25 240 68.8 190.08 19 128.5 19Z">
-          </path>
-        </svg>
-        <span>GitHub</span>
-      </a>
-      <a href="/codepen.html" aria-label="Codepen" style="color: var(--primary-500)">
+      <!-- <a href="/codepen.html" aria-label="Codepen" style="color: var(--primary-500)">
         <svg viewBox="0 0 100 100" width="100" height="100">
           <path
             d="M100 34.2c-.4-2.6-3.3-4-5.3-5.3-3.6-2.4-7.1-4.7-10.7-7.1-8.5-5.7-17.1-11.4-25.6-17.1-2-1.3-4-2.7-6-4-1.4-1-3.3-1-4.8 0-5.7 3.8-11.5 7.7-17.2 11.5L5.2 29C3 30.4.1 31.8 0 34.8c-.1 3.3 0 6.7 0 10v16c0 2.9-.6 6.3 2.1 8.1 6.4 4.4 12.9 8.6 19.4 12.9 8 5.3 16 10.7 24 16 2.2 1.5 4.4 3.1 7.1 1.3 2.3-1.5 4.5-3 6.8-4.5 8.9-5.9 17.8-11.9 26.7-17.8l9.9-6.6c.6-.4 1.3-.8 1.9-1.3 1.4-1 2-2.4 2-4.1V37.3c.1-1.1.2-2.1.1-3.1 0-.1 0 .2 0 0zM54.3 12.3 88 34.8 73 44.9 54.3 32.4V12.3zm-8.6 0v20L27.1 44.8 12 34.8l33.7-22.5zM8.6 42.8 19.3 50 8.6 57.2V42.8zm37.1 44.9L12 65.2l15-10.1 18.6 12.5v20.1zM50 60.2 34.8 50 50 39.8 65.2 50 50 60.2zm4.3 27.5v-20l18.6-12.5 15 10.1-33.6 22.4zm37.1-30.5L80.7 50l10.8-7.2-.1 14.4z">
           </path>
         </svg>
         <span>My codepens</span>
+      </a> -->
+      <a href="/projects.html" aria-label="Projects" style="color: var(--primary-500)">
+        <span>Projects</span>
+      </a>
+      <a class="resume" href="/josh-howson-resume.pdf" target="_blank">
+        <span>Resume</span>
+      </a>
+      <a href="https://github.com/josh-howson/" target="_blank" aria-label="GitHub">
+        <svg viewBox="0 0 256 256" width="256" height="256">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M128.5 19C66.93 19 17 68.8 17 130.25c0 49.15 31.95 90.85 76.25 105.56 5.57 1.03 7.62-2.41 7.62-5.35 0-2.66-.1-11.42-.15-20.72-31.02 6.73-37.57-13.12-37.57-13.12-5.07-12.86-12.38-16.28-12.38-16.28-10.11-6.9.77-6.76.77-6.76 11.2.78 17.09 11.46 17.09 11.46 9.94 17.01 26.08 12.1 32.44 9.25 1-7.19 3.9-12.1 7.08-14.88-24.76-2.8-50.8-12.35-50.8-54.97 0-12.15 4.36-22.07 11.5-29.86-1.17-2.8-4.98-14.12 1.07-29.45 0 0 9.36-2.99 30.67 11.4 8.9-2.46 18.44-3.7 27.91-3.74 9.48.05 19.02 1.28 27.93 3.75 21.28-14.4 30.63-11.4 30.63-11.4 6.07 15.32 2.26 26.63 1.1 29.44 7.15 7.79 11.47 17.71 11.47 29.86 0 42.72-26.08 52.13-50.9 54.89 3.99 3.45 7.55 10.22 7.55 20.6 0 14.88-.13 26.86-.13 30.53 0 2.96 2.01 6.43 7.66 5.33C208.1 221.07 240 179.4 240 130.25 240 68.8 190.08 19 128.5 19Z">
+          </path>
+        </svg>
+        <span>GitHub</span>
       </a>
       <a href="https://www.linkedin.com/in/joshhowson/" target="_blank" aria-label="LinkedIn">
         <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
