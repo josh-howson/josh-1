@@ -358,7 +358,7 @@
       const iframe = project.querySelector('iframe');
       const preview = project.querySelector('img');
       const loadButton = project.querySelector('.try');
-      loadButton.addEventListener('click', () => {
+      loadButton && loadButton.addEventListener('click', () => {
         iframe.src = siteUrl;
         iframe.style.display = "";
         loadButton.remove();
