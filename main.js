@@ -1,13 +1,10 @@
 const themeToggler = document.querySelector("#colorScheme");
 
 themeToggler.addEventListener("change", e => {
-  if (e.target.checked) {
-    document.documentElement.dataset.theme = "light";
-    localStorage.setItem("theme", "light");
-  } else {
-    document.documentElement.dataset.theme = "dark";
-    localStorage.setItem("theme", "dark");
-  }
+  const newTheme = e.target.checked ? 'light' : 'dark';
+  document.documentElement.dataset.theme = newTheme;
+  localStorage.setItem("theme", newTheme);
+  gtag('event', 'theme_toggle', { theme: newTheme });
 });
 
 // store a cookie with the theme preference
