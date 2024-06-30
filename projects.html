@@ -83,8 +83,10 @@
     }
     .project-graphic .try {
       position: absolute;
-      bottom: 0;
-      right: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transform-origin: left top;
       margin: 2rem;
       animation: pulse .75s ease-in-out infinite alternate;
       z-index: 1;
@@ -116,6 +118,7 @@
         scale: .9;
       }
     }
+
     @media (max-width: 1199px) {
       article {
         flex-direction: column;
@@ -169,7 +172,7 @@
     <article>
       <div class="project-graphic" data-project-url="https://www.fantanosevens.com">
         <img class="project-image" loading="eager" src="/images/fantanosevens-mobile.png" alt="Fantano sevens web app screenshot"/>
-        <button class="try button-floating">Load</button>
+        <button class="try button-floating">Demo</button>
         <iframe style="display:none"></iframe>
       </div>
       <div>
@@ -190,18 +193,17 @@
           <div>Spotify API</div>
           <div>PWA</div>
         </div>
-        <p>Randomly select an album that <a href="https://www.youtube.com/user/theneedledrop" target="_blank">Anthony Fantano</a> has rated a 7 or higher.</p>
-        <p>I made it because I always want to discover new music. But sometimes it's tiring to search for new albums.</p>
-        <p>So I built tool which randomly selects an album which popular critic Anthony Fantano has positively reviewed. The app makes it easy to immediately start listening with its Spotify integration. It also lets you keep track of the albums you've listened to. And you can log it if you've listened through, like it if it's up your alley.</p>
+        <p>It randomly selects an album <a href="https://www.youtube.com/user/theneedledrop" target="_blank">Anthony Fantano</a> has rated a 7 or higher.</p>
+        <p>Finding new albums is tiring, but I want to discover new music. So I built tool which randomly selects an album which popular critic Anthony Fantano has positively reviewed. The app makes it easy to immediately start listening with its Spotify integration. It also lets you keep track of the albums you've listened to. And you can log it if you've listened through, like it if it's up your alley.</p>
         <p>For simplicity's sake it uses localStorage to save your past albums.</p>
         <p>Fantano review data comes from <a target="_blank" href="https://github.com/garcia-santiago/fantanoScraper">this scraper</a> maintained by <a href="https://github.com/garcia-santiago" target="_blank">@garcia-santiago</a>.</p>
-        <a class="try-full" href="https://www.fantanosevens.com" target="_blank">Try it here</a>
+        <a class="try-full" href="https://www.fantanosevens.com" target="_blank">Try it live ➜</a>
       </div>
     </article>
     <article>
       <div class="project-graphic" data-project-url="https://yt-thumbnail-preview.joshhowson.com/">
         <img class="project-image" loading="lazy" src="/images/yt-thumbnail-download-mobile.png" alt="YT Thumbnail Downloader web app screenshot"/>
-        <button class="try button-floating">Load</button>
+        <button class="try button-floating">Demo</button>
         <iframe style="display:none"></iframe>
       </div>
       <div>
@@ -223,13 +225,13 @@
           <div>Youtube Media API</div>
         </div>
         <p>This tool mimicks a youtube search page by fetching real videos using the Youtube Media API, and lets you upload a thumbnail, add a title and see the preview.</p>
-        <a class="try-full" href="http://yt-thumbnail-preview.joshhowson.com" target="_blank">Try it here</a>
+        <a class="try-full" href="http://yt-thumbnail-preview.joshhowson.com" target="_blank">Try it live ➜</a>
       </div>
     </article>
     <article>
       <div class="project-graphic" data-project-url="https://ti-snapshop.vercel.app/">
         <img class="project-image" loading="lazy" src="/images/ti-snapshop-mobile.png" alt="snapshop web app screenshot"/>
-        <button class="try button-floating">Load</button>
+        <button class="try button-floating">Demo</button>
         <iframe style="display:none"></iframe>
       </div>
       <div>
@@ -243,7 +245,7 @@
         <p>I teamed up with 2 colleagues for Trader Interactive's 2024 hackathon which took place over 3 days. Our goal was to leverage recent AI developments to search our vehicle classified websites with just an image. We used OpenAI API's Vision to accomplish this.</p>
         <p>Just upload an image of a vehicle from your device and AI will automatically determine which of our dozen vehicle classified websites to send you to. It brings you straight to relevant search results for the make and model found in the image.</p>
         <p>I also put together <a href="https://www.youtube.com/watch?v=CzF5fByN9Qk" target="_blank">a video</a> for the hackathon submission.</p>
-        <a class="try-full" href="https://ti-snapshop.vercel.app/" target="_blank">Try it here</a>
+        <a class="try-full" href="https://ti-snapshop.vercel.app/" target="_blank">Try it live ➜</a>
       </div>
     </article>
 
@@ -283,13 +285,13 @@
         </div>
         <p>I was the lead UI engineer for this greenfield development project of a marine classifieds website for Trader Interactive from 2020-2023. We used cutting edge SSR frameworks in this build. Boatline has technically existed for over almost two decades, but it's been sitting idle since its birth, and was given new life in 2020.</p>
         <p>Boatline is now <a target="_blank" href="https://boatmart.com">Boatmart.com</a> (I did not work on Boatmart).</p>
-        <a class="try-full" href="https://web.archive.org/web/20231031144503/https://www.boatline.com/search/sail?category=Sail" target="_blank">See it on WaybackMachine</a>
+        <a class="try-full" href="https://web.archive.org/web/20231031144503/https://www.boatline.com/search/sail?category=Sail" target="_blank">See it on WaybackMachine ➜</a>
       </div>
     </article>
     <article>
       <div class="project-graphic" data-project-url="https://josh-howson.github.io/synth0/">
         <img class="project-image" loading="lazy" src="/images/synth0-mobile.png" alt="synth0 web app screenshot"/>
-        <button class="try button-floating">Load</button>
+        <button class="try button-floating">Demo</button>
         <iframe style="display:none"></iframe>
       </div>
       <div>
@@ -309,14 +311,14 @@
           <div>Web Audio API</div>
           <div>MIDI Protocol</div>
         </div>
-        <p>Audio engineering/sound design are among my top hobbies, so when I learned there was a Web Audio API which provides oscillators, filters and manipulation of audio signals in any imaginable way, I was very excited. So I built a simple synthesizer, and implemented MIDI protocol. This allows you to connect a MIDI instrument if you have one available.</p>
-        <a class="try-full" href="https://joshhowson.com/synth0" target="_blank">Try it here</a>
+        <p>I'm big into audio engineering/sound design, so when I learned there was a Web Audio API which provides oscillators, filters and manipulation of audio signals in any imaginable way, I was very excited. So I built a basic synthesizer, and implemented MIDI protocol. This allows you to connect a MIDI instrument if you have one available.</p>
+        <a class="try-full" href="https://joshhowson.com/synth0" target="_blank">Try it live ➜</a>
       </div>
     </article>
     <article>
       <div class="project-graphic" data-project-url="https://josh-howson.github.io/HappyHeli/">
         <img class="project-image" loading="lazy" src="/images/happyheli-mobile.png" alt="HappyHeli web app screenshot"/>
-        <button class="try button-floating">Load</button>
+        <button class="try button-floating">Demo</button>
         <iframe style="display:none"></iframe>
       </div>
       <div>
@@ -336,7 +338,7 @@
           <div>CSS Animation</div>
         </div>
         <p>An exercise in SVG animation.</p>
-        <a class="try-full" href="https://josh-howson.github.io/HappyHeli/" target="_blank">Try it here</a>
+        <a class="try-full" href="https://josh-howson.github.io/HappyHeli/" target="_blank">Try it live ➜</a>
       </div>
     </article>
   </main>
