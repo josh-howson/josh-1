@@ -49,6 +49,8 @@
     .project-graphic {
       width: 320px;
       flex: 0 0 auto;
+      display: grid;
+      place-items: center;
       border-radius: 1.6rem;
       overflow: hidden;
       box-shadow: 0 1rem 3rem rgba(0, 0, 0, .1), 0 .25rem .25rem rgba(0, 0, 0, .1);
@@ -56,38 +58,31 @@
       top: 2rem;
     }
     .project-graphic .project-image {
+      grid-area: 1 / 1;
       display: block;
       width: 100%;
       height: auto;
     }
     .project-graphic::after {
       content: '';
-      position: absolute;
-      inset: 0;
       width: 100%;
       height: 100%;
       transition: all .5s ease;
       pointer-events: none;
+      grid-area: 1 / 1;
     }
     .project-graphic:has(.try):hover::after {
       background-color: rgba(0, 0, 0, .3);
       backdrop-filter: blur(5px);
     }
     .project-graphic iframe {
-      position: absolute;
+      grid-area: 1 / 1;
       width: 100%;
       height: 100%;
       border: 0;
-      top: 0;
-      left: 0;
     }
     .project-graphic .try {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transform-origin: left top;
-      margin: 2rem;
+      grid-area: 1 / 1;
       animation: pulse .75s ease-in-out infinite alternate;
       z-index: 1;
     }
@@ -167,8 +162,31 @@
     <input class="sr-only" type="checkbox" id="colorScheme" title="Toggle color scheme">
     <label for="colorScheme"></label>
   </div>
+
   <main class="holy-grail">
     <h1>My projects</h1>
+
+    <article>
+      <div class="project-graphic" data-project-url="https://ti-snapshop.vercel.app/">
+        <img class="project-image" loading="lazy" src="/images/ti-snapshop-mobile.png" alt="snapshop web app screenshot"/>
+        <button class="try button-floating">Demo</button>
+        <iframe style="display:none"></iframe>
+      </div>
+      <div>
+        <h2>snapshop</h2>
+        <p>Visual search using AI.</p>
+        <div class="tags">
+          <div>ChatGPT</div>
+          <div>Vue.js</div>
+          <div>Nuxt.js</div>
+        </div>
+        <p>I teamed up with 2 colleagues for Trader Interactive's 2024 hackathon which took place over 3 days. Our goal was to leverage recent AI developments to search our vehicle classified websites with just an image. We used OpenAI API's Vision to accomplish this.</p>
+        <p>Just upload an image of a vehicle from your device and AI will automatically determine which of our dozen vehicle classified websites to send you to. It brings you straight to relevant search results for the make and model found in the image.</p>
+        <p>I also put together <a href="https://www.youtube.com/watch?v=CzF5fByN9Qk" target="_blank">a video</a> for the hackathon submission.</p>
+        <a class="try-full" href="https://ti-snapshop.vercel.app/" target="_blank">Try it live ➜</a>
+      </div>
+    </article>
+
     <article>
       <div class="project-graphic" data-project-url="https://www.fantanosevens.com">
         <img class="project-image" loading="eager" src="/images/fantanosevens-mobile.png" alt="Fantano sevens web app screenshot"/>
@@ -200,6 +218,7 @@
         <a class="try-full" href="https://www.fantanosevens.com" target="_blank">Try it live ➜</a>
       </div>
     </article>
+
     <article>
       <div class="project-graphic" data-project-url="https://yt-thumbnail-preview.joshhowson.com/">
         <img class="project-image" loading="lazy" src="/images/yt-thumbnail-download-mobile.png" alt="YT Thumbnail Downloader web app screenshot"/>
@@ -226,26 +245,6 @@
         </div>
         <p>This tool mimicks a youtube search page by fetching real videos using the Youtube Media API, and lets you upload a thumbnail, add a title and see the preview.</p>
         <a class="try-full" href="http://yt-thumbnail-preview.joshhowson.com" target="_blank">Try it live ➜</a>
-      </div>
-    </article>
-    <article>
-      <div class="project-graphic" data-project-url="https://ti-snapshop.vercel.app/">
-        <img class="project-image" loading="lazy" src="/images/ti-snapshop-mobile.png" alt="snapshop web app screenshot"/>
-        <button class="try button-floating">Demo</button>
-        <iframe style="display:none"></iframe>
-      </div>
-      <div>
-        <h2>snapshop</h2>
-        <p>Visual search using AI.</p>
-        <div class="tags">
-          <div>ChatGPT</div>
-          <div>Vue.js</div>
-          <div>Nuxt.js</div>
-        </div>
-        <p>I teamed up with 2 colleagues for Trader Interactive's 2024 hackathon which took place over 3 days. Our goal was to leverage recent AI developments to search our vehicle classified websites with just an image. We used OpenAI API's Vision to accomplish this.</p>
-        <p>Just upload an image of a vehicle from your device and AI will automatically determine which of our dozen vehicle classified websites to send you to. It brings you straight to relevant search results for the make and model found in the image.</p>
-        <p>I also put together <a href="https://www.youtube.com/watch?v=CzF5fByN9Qk" target="_blank">a video</a> for the hackathon submission.</p>
-        <a class="try-full" href="https://ti-snapshop.vercel.app/" target="_blank">Try it live ➜</a>
       </div>
     </article>
 
