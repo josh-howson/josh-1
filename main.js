@@ -108,9 +108,7 @@ const initHomepageAnimations = () => {
     
     setTimeout(() => setBackgroundGradientPosition(), duration);
   }
-  
-  // document.body.style.setProperty("--gradient-x", "0%");
-  // document.body.style.setProperty("--gradient-y", "0%");
+
   document.addEventListener('DOMContentLoaded', (event) => {
     setBackgroundGradientPosition();
   });
@@ -118,3 +116,33 @@ const initHomepageAnimations = () => {
 
 if (document.querySelector(".homepage"))
   initHomepageAnimations();
+
+document.addEventListener('DOMContentLoaded', function() {
+  const videos = document.querySelectorAll('video');
+
+  const loadVideo = (video) => {
+    const source = video.querySelector('source');
+    source.src = source.getAttribute('data-src');
+    video.load();
+    video.setAttribute('autoplay', true);
+  };
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '500px',
+    threshold: 0,
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadVideo(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  videos.forEach(video => {
+    observer.observe(video);
+  });
+});
