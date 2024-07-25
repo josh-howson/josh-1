@@ -159,7 +159,7 @@ body {
 
 /* dark mode toggler */
 
-.theme-toggle {
+:where(:not(nav)) > .theme-toggle {
   position: absolute;
   top: 0;
   right: 0;
@@ -213,7 +213,7 @@ body {
 }
 
 @media (min-width: 35em) {
-  .theme-toggle {
+  :where(:not(nav)) > .theme-toggle {
     top: 0;
     right: 0;
     margin: calc(2vw + 4rem) 5vw 0 0;
@@ -391,6 +391,11 @@ h1:not(.hp-heading) {
   font-size: .75em;
   gap: 1.5em;
   padding: 4em;
+}
+
+.nav .josh {
+  font-size: 2em;
+  font-weight: 700;
 }
 
 .homepage .nav {
