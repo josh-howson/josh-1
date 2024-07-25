@@ -396,6 +396,10 @@ h1:not(.hp-heading) {
 .nav .josh {
   font-size: 2em;
   font-weight: 700;
+  text-align: center;
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 }
 
 .homepage .nav {
